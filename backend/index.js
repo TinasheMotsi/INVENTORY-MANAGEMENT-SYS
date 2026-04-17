@@ -5,6 +5,7 @@ const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const stockRoutes = require("./routes/stockRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const salesRoutes = require("./routes/salesRoutes");
 
 const app = express();
 // THE CORS CONFIGURATION BELOW ALLOWS ALL ORIGINS. IN PRODUCTION, YOU SHOULD RESTRICT THIS TO YOUR FRONTEND DOMAIN.
@@ -16,6 +17,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/stock", stockRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/sales", salesRoutes);
 
 
 app.get("/", (req, res) => {

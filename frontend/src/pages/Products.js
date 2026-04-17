@@ -166,6 +166,25 @@ const Products = () => {
   const filteredProducts = products.filter((p) =>
     p.name.toLowerCase().includes(search.toLowerCase())
   );
+  const sellProduct = async (id) => {
+  const qty = prompt("Enter quantity to sell:");
+
+  if (!qty || Number(qty) <= 0) {
+    return alert("Invalid quantity");
+  }
+
+  try {
+    await API.post("/sales/sell", {
+      product_id: id,
+      quantity: Number(qty),
+    });
+
+    alert("Sale successful 💰");
+    fetchProducts();
+  } catch (err) {
+    alert(err.response?.data?.message || "Sale failed");
+  }
+};
 
   return (
     <Layout>
@@ -255,6 +274,7 @@ const Products = () => {
                 <RemoveButton onClick={() => stockOut(p.id)}>- Stock</RemoveButton>
                 <Button onClick={() => editProduct(p)}>Edit</Button>
                 <Button onClick={() => deleteProduct(p.id)}>Delete</Button>
+                <Button onClick={() => sellProduct(p.id)}>Sell</Button>
               </Td>
             </Tr>
           ))}

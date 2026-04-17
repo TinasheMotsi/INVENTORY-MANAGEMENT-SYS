@@ -1,0 +1,1 @@
+<li onClick={() => navigate("/sales")}>Sales</li>
