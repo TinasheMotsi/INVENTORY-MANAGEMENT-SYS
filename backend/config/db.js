@@ -1,12 +1,11 @@
 const { Pool } = require("pg");
 
-console.log("DATABASE_URL:", process.env.DATABASE_URL); // debug
-
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
   },
+  family: 4, // 🔥 FORCE IPv4 (THIS FIXES ENETUNREACH)
 });
 
 module.exports = pool;
