@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import API from "../services/api";
+import axios from "../services/api";
 
-const Login = () => {
-  const [form, setForm] = useState({ email: "", password: "" });
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
     try {
-      const res = await API.post("/auth/login", form);
-
+      const res = await axios.post("/auth/login", { email, password });
       localStorage.setItem("token", res.data.token);
-
       window.location.href = "/dashboard";
     } catch (err) {
       alert("Login failed");
@@ -17,23 +16,70 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div style={styles.container}>
+      <div style={styles.card}>
+        <h2 style={styles.title}>Inventory System</h2>
+        <p style={styles.subtitle}>Welcome back 👋</p>
 
-      <input
-        placeholder="Email"
-        onChange={(e) => setForm({ ...form, email: e.target.value })}
-      />
+        <input
+          style={styles.input}
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={(e) => setForm({ ...form, password: e.target.value })}
-      />
+        <input
+          style={styles.input}
+          type="password"
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <button onClick={handleLogin}>Login</button>
+        <button style={styles.button} onClick={handleLogin}>
+          Login
+        </button>
+      </div>
     </div>
   );
-};
+}
 
-export default Login;
+const styles = {
+  container: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "linear-gradient(135deg, #1e3c72, #2a5298)",
+  },
+  card: {
+    background: "#fff",
+    padding: "40px",
+    borderRadius: "12px",
+    width: "320px",
+    boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
+    textAlign: "center",
+  },
+  title: {
+    marginBottom: "5px",
+  },
+  subtitle: {
+    marginBottom: "20px",
+    color: "gray",
+  },
+  input: {
+    width: "100%",
+    padding: "10px",
+    margin: "10px 0",
+    borderRadius: "6px",
+    border: "1px solid #ccc",
+  },
+  button: {
+    width: "100%",
+    padding: "10px",
+    background: "#2a5298",
+    color: "#fff",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+    marginTop: "10px",
+  },
+};

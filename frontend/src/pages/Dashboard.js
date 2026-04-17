@@ -18,16 +18,32 @@ const Card = styled.div`
 `;
 
 const Dashboard = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    totalProducts: 0,
+    totalStock: 0,
+    lowStock: [],
+  });
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await API.get("/dashboard");
-      setData(res.data);
+      try {
+        const res = await API.get("/dashboard");
+        setData(res.data);
+      } catch (err) {
+        console.error("Dashboard error:", err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
   }, []);
+
+  if (loading) {
+    return <Layout><h2>Loading dashboard...</h2></Layout>;
+  }
 
   return (
     <Layout>
@@ -47,11 +63,16 @@ const Dashboard = () => {
 
       <h3 style={{ marginTop: "30px" }}>Low Stock</h3>
 
-      {data.lowStock?.map((item) => (
-        <Card key={item.id}>
-          {item.name} - {item.quantity}
-        </Card>
-      ))}
+      {data.lowStock.length === 0 ? (
+        <p>No low stock items ✅</p>
+      ) : (
+        data.lowStock.map((item) => (
+          <Card key={item.id}>
+            {item.name} - {item.quantity}
+          </Card>
+        ))
+      )}
+
       <StockChart />
     </Layout>
   );
