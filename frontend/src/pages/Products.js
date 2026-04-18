@@ -54,6 +54,13 @@ const Tr = styled.tr`
     background: #f9fafb;
   }
 `;
+const SellButton = styled(Button)`
+  background: #7c3aed;
+`;
+
+const DeleteButton = styled(Button)`
+  background: #991b1b;
+`;
 
 const Products = () => {
   const [search, setSearch] = useState("");
@@ -235,7 +242,10 @@ const Products = () => {
       />
 
       {loading && <p>Loading products...</p>}
-
+<h3>
+  Inventory Value: $
+  {products.reduce((sum, p) => sum + p.price * p.quantity, 0).toFixed(2)}
+</h3>
       {/* TABLE */}
       <Table>
         <thead>
@@ -261,9 +271,16 @@ const Products = () => {
               <Td>
                 {p.quantity}
                 {p.quantity < 5 && (
-                  <span style={{ color: "red", marginLeft: "10px" }}>
-                    ⚠ Low
-                  </span>
+                  <span style={{
+  background: "#fee2e2",
+  color: "#b91c1c",
+  padding: "2px 8px",
+  borderRadius: "6px",
+  marginLeft: "10px",
+  fontSize: "12px"
+}}>
+  ⚠ Low
+</span>
                 )}
               </Td>
 
