@@ -290,8 +290,8 @@ const Products = () => {
                 <AddButton onClick={() => stockIn(p.id)}>+ Stock</AddButton>
                 <RemoveButton onClick={() => stockOut(p.id)}>- Stock</RemoveButton>
                 <Button onClick={() => editProduct(p)}>Edit</Button>
-                <Button onClick={() => deleteProduct(p.id)}>Delete</Button>
-                <Button onClick={() => sellProduct(p.id)}>Sell</Button>
+                <DeleteButton onClick={() => deleteProduct(p.id)}>Delete</DeleteButton>
+                <SellButton onClick={() => sellProduct(p.id)}>Sell</SellButton>
               </Td>
             </Tr>
           ))}
